@@ -1,0 +1,40 @@
+一、系统初始化
+ 
+HAL_Init() ;初始化 HAL 库，配置 SysTick 定时器（为  HAL_Delay()  提供时间基准）和 NVIC 优先级分组。
+ 
+二、GPIO
+ 
+HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init) ;初始化指定 GPIO 引脚的模式、上下拉、输出速度等。
+HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState) ;设置指定 GPIO 引脚的输出电平（高或低）。
+HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin) ;读取指定 GPIO 引脚的当前输入电平。
+HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin) ;翻转指定 GPIO 引脚的输出电平。
+ 
+三、UART（串口）
+ 
+HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout) ;以阻塞方式通过 UART 发送数据。
+HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout) ;以阻塞方式从 UART 接收指定字节数的数据。
+HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size) ;以中断方式启动 UART 发送，发送完成后触发回调函数。
+HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);以中断方式启动 UART 接收，接收完成后触发回调函数。
+ 
+四、定时器（TIM）
+ 
+HAL_TIM_Base_Start_IT(TIM_HandleTypeDef *htim) ;启动基本定时器并开启更新中断，周期到达时触发回调函数。
+HAL_TIM_SET_COMPARE(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t CompareValue) ;设置 PWM 通道的比较值，用于控制占空比。
+ 
+五、ADC（模数转换）
+ 
+HAL_ADC_Start(ADC_HandleTypeDef* hadc);启动一次 ADC 转换。
+HAL_ADC_PollForConversion(ADC_HandleTypeDef* hadc, uint32_t Timeout) ;等待 ADC 转换完成（阻塞式）。
+HAL_ADC_GetValue(ADC_HandleTypeDef* hadc) ;读取最近一次 ADC 转换结果（12 位无符号整数）。
+ 
+六、I2C 通信
+ 
+HAL_I2C_Mem_Write(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout) ;向 I2C 从设备的指定寄存器地址写入数据。
+HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout) ;从 I2C 从设备的指定寄存器地址读取数据。
+ 
+七、中断回调函数
+ 
+HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) ;GPIO 外部中断触发时调用，用于处理按键、传感器中断等。
+HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) ;UART 接收完成（中断或 DMA 模式）时调用，用于处理串口数据接收。
+HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) ;定时器更新事件（周期到达）时调用，用于实现定时任务。
+HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) ;ADC 转换完成时调用，用于处理采样数据。
