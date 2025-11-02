@@ -1,0 +1,7 @@
+实现了CAN控制M3508电机
+学习了serialplot串口绘图，读取电机状态
+学习了git基本命令
+git推送
+git add .
+git commit -m "project.name"
+git push origin main
