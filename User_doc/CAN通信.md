@@ -40,7 +40,7 @@ static inline int16_t can_to_int16(uint8_t high, uint8_t low)
  * @param low 低8位字节
  * @return 拼接后的目标数据
  */
-static inline int16_t can_to_uint16(uint8_t high, uint8_t low)
+static inline uint16_t can_to_uint16(uint8_t high, uint8_t low)
 {
     return (uint16_t)(((uint16_t)high << 8) | low);
 }

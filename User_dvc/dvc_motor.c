@@ -23,8 +23,8 @@ static uint8_t motor_tx_0x200[8] = {0};
 static uint8_t motor_tx_0x1FF[8] = {0};
 
 static PID_HandleTypeDef pid1 = {
-    .output_max = 20,
-    .output_min = -20,
+    .output_max = 5000,     // 16384对应20A, 谁敢让它满转?
+    .output_min = -5000,
     .err_int_max = 400,
     .compensation = 0,
     .deadzone = 0,
@@ -76,15 +76,19 @@ void Motor_Init(void)
     CAN_Filter.FilterIdLow = CAN_STD_FRAME | CAN_DATA_FRAME;
     CAN_Filter.FilterMaskIdHigh = CAN_STD(0x3F0);   // 11 1111 0000 低四位随便
     CAN_Filter.FilterMaskIdLow = 0xFF;              // RTR IDE 完全匹配  
+    // CAN_Filter.FilterMaskIdHigh = 0x00;   
+    // CAN_Filter.FilterMaskIdLow = 0x00;              // 全通  
     CAN_Filter.FilterMode = CAN_FILTERMODE_IDMASK;
     CAN_Filter.FilterScale = CAN_FILTERSCALE_32BIT;
+//    CAN_Filter.FilterActivation = DISABLE;
     CAN_Filter.FilterActivation = ENABLE;
     HAL_CAN_ConfigFilter(&hcan1, &CAN_Filter);
+	HAL_CAN_Init(&hcan1);
     
     HAL_CAN_Start(&hcan1);
 
     __HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
-    // __HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_RX_FIFO1_MSG_PENDING);
+    // __HAL_CAN_ENABLE_IT(&hcan, CAN_IT_RX_FIFO1_MSG_PENDING);
 }
 
 /**
@@ -172,8 +176,8 @@ static inline uint16_t can_to_uint16(uint8_t high, uint8_t low)
 /**
  * @brief 获取电机参数, 自动从can_rx_packet中解析
  * @param hmotor 电机句柄
- * @note 数据拼接说明: 
- * @note CAN接收的报文是uint8_t类型, 在这里需要手动拼接到uint16_t类型, 不得使用int类型, 符号位会干扰, 
+ * @note 仅赋值电机参数: id, angle, rpm, current, temperature
+ * @note 不涉及PID控制器
  */
 HAL_StatusTypeDef Motor_GetParam(Motor_HandleTypeDef *hmotor)
 { 
@@ -247,7 +251,8 @@ void Motor_PIDUpdate(Motor_HandleTypeDef *hmotor)
 }
 
 /**
- * @brief 电机设置RPM转速
+ * @brief 电机设置RPM转速, 闭环控制
+ * @note 内置PID控制器
  * @param hmotor 电机句柄
  * @param target_rpm 目标转速
  */

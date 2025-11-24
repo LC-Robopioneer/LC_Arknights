@@ -28,6 +28,13 @@ void setup(void)
  */
 void loop(void)
 {
+    // CAN报文主循环处理
+    if(can_rx_flag == 1)
+    {
+        can_rx_flag = 0;
+        
+    }
+
     // 处理串口接收到的数据
     if(serial_rx_flag == 1)
     {
@@ -44,6 +51,8 @@ void loop(void)
     {
         pid_motor_flag = 0;
 
-        Motor_SetTargetRPM(&hmotor1, hmotor1.pid->target);          
+        hmotor1.pid->actual = hmotor1.rpm;
+        PID_Update(hmotor1.pid);
+        Motor_SetCurrentMap(&hmotor1, hmotor1.pid->output);     
     }
 }
