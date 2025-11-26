@@ -1,0 +1,28 @@
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+.vscode/
+MDK-ARM/DebugConfig/
+MDK-ARM/ReleaseConfig/
+MDK-ARM/RTE/
+MDK-ARM/F4_motor/
+MDK-ARM/.vscode/
+MDK-ARM/*.uvguix.*
+
+# Other files and folders
+.settings/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+*.log
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
+MDK-ARM/.vscode/uv4.log
+MDK-ARM/.vscode/uv4.log.lock
