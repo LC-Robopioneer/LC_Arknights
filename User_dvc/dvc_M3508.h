@@ -21,7 +21,7 @@ public:
     uint16_t Get_Angle() const { return angle; }                  // 获取电机角度
     uint8_t Get_Temperature() const { return temperature; }       // 获取电机温度
     uint16_t Get_ID() const { return motor_ID; }                  // 获取电机ID
-	inline void Set_temperature();
+	
 private:
     uint16_t motor_ID;
     CAN_HandleTypeDef *can_handler;
@@ -33,8 +33,5 @@ private:
     uint16_t angle = 0;         // 电机角度
     uint8_t temperature = 0;    // 电机温度
 };
-void Class_Motor_M3508::Set_temperature()
-{
-	temperature++;
-}
+
 #endif
