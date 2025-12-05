@@ -1,6 +1,14 @@
 #include "M3508_drv.h"
 
-//void Secutity_Check(M3508_Motor *Motor)
+
+void Security_Check(HAL_StatusTypeDef  Staus)
+{
+	if(Staus!=HAL_OK)
+	{
+		Error_Handler();
+	}
+	
+}
 void M3508_Init(M3508_Motor *Motor)
 {
 	//参数有效性检查
@@ -37,9 +45,29 @@ void M3508_Set_Current(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,int16_t curren
 	}
 	
 	Motor->target_current=current;
+	//Security_Check(CAN_Send_Data(hcan,motor_position,Motor->target_current));
 	CAN_Send_Data(hcan,motor_position,Motor->target_current);//谁传，传给谁，传多少	
 }
-
+void M3508_Set_Current_PID(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,PID * pid ,int16_t target_current,
+int16_t now_current,uint8_t motor_position)
+{
+	//参数有效性检查
+	if(Motor==NULL)//传入空指针直接返回
+	{
+		return ;
+	}
+	//电流限幅
+	if(target_current>=Motor->current_max)
+	{
+		target_current=Motor->current_max;//可加警告完善 ERROR_Handler里面可以设置状态判断是哪一种警告然后做出相应处理
+	}
+	if(target_current<=Motor->current_min)
+	{
+		target_current=Motor->current_min;
+	}
+	Motor->target_current=PID_Caculate(pid,now_current ,target_current );
+	Security_Check(CAN_Send_Data(hcan,motor_position,Motor->target_current));	
+}
 void M3508_Stop(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,uint8_t motor_position)
 {
 	//参数有效性检查
@@ -49,7 +77,8 @@ void M3508_Stop(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,uint8_t motor_positio
 	}
 	Motor->target_current=0;
 	Motor->Motor_State=MOTOR_STOP;
-	CAN_Send_Data(hcan,motor_position,Motor->target_current);
+	Security_Check(CAN_Send_Data(hcan,motor_position,Motor->target_current));
+	//CAN_Send_Data(hcan,motor_position,Motor->target_current);
 	
 }
 void M3508_Emergency_Stop(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,uint8_t motor_position)
@@ -61,7 +90,8 @@ void M3508_Emergency_Stop(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,uint8_t mot
 	Motor->target_current=0;
 	Motor->emergency_stop=1;
 	Motor->Motor_State=MOTOR_STOP;
-	CAN_Send_Data(hcan,motor_position,Motor->target_current);
+	Security_Check(CAN_Send_Data(hcan,motor_position,Motor->target_current));
+	//CAN_Send_Data(hcan,motor_position,Motor->target_current);
 }
 void M3508_Resume_From_Stop(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,uint8_t motor_position)
 {

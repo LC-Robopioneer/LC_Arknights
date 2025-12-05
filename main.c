@@ -30,7 +30,12 @@
 #include "C_Can.h"
 #include "BSP.h"
 #include "TIM.h"
-M3508_Motor M3508_Motor_1;
+#include "string.h"
+#include "stdio.h"
+#include "drv_pid.h"
+extern M3508_Motor M3508_Motor_1;
+MOTOR_POSITION_ID   Motor_Posion=Motor1;
+
 
 /* USER CODE END Includes */
 
@@ -53,7 +58,7 @@ M3508_Motor M3508_Motor_1;
 
 /* USER CODE BEGIN PV */
  uint16_t error =0;
- int16_t Rx_Encoder, Rx_Omega, Rx_Torque, Rx_Temperature;
+ extern int16_t Rx_Encoder, Rx_Omega, Rx_Torque, Rx_Temperature;
  uint8_t TX_Data[8]; 
  int16_t Tx_Encoder, Tx_Omega, Tx_Torque, Tx_Temperature;
 /* USER CODE END PV */
@@ -71,7 +76,7 @@ void Motor_Call_Back(CAN_Rx_Buffer * can_rx_buffer)
 	uint8_t *Rx_Data = can_rx_buffer->Data;
     switch (can_rx_buffer->Header.StdId)
     {
-    case (0x204):
+    case (0x201):
     {
         Rx_Encoder = (Rx_Data[0] << 8) | Rx_Data[1];
         Rx_Omega = (Rx_Data[2] << 8) | Rx_Data[3];
@@ -84,14 +89,14 @@ void Motor_Call_Back(CAN_Rx_Buffer * can_rx_buffer)
 //把CAN发到板子上的数据用串口发送到电脑
 void CAN_RX_Message_Get(void)
 {
-	 Tx_Encoder = Rx_Encoder;
-     Tx_Omega = Rx_Omega;
-     Tx_Torque = Rx_Torque;
-     Tx_Temperature = Rx_Temperature;
+	 Tx_Encoder = Rx_Encoder;//角度
+     Tx_Omega = Rx_Omega;//转速
+     Tx_Torque = Rx_Torque;//扭矩
+     Tx_Temperature = Rx_Temperature;//温度
 	
 	 TX_Data[0]=(Tx_Omega>>8)&0xFF;
 	 TX_Data[1]=Tx_Omega&0xFF;
-	
+	 
 	 TX_Data[2]=(Tx_Encoder>>8)&0xFF;
 	 TX_Data[3]=Tx_Encoder&0xFF;
 	
@@ -100,8 +105,10 @@ void CAN_RX_Message_Get(void)
 	
 	 TX_Data[6]=(Tx_Temperature>>8)&0xFF;
 	 TX_Data[7]=Tx_Temperature&0xFF;
-	
-	 HAL_UART_Transmit_DMA(&huart2,TX_Data,8);
+	  
+	 char buffer[64];
+	 sprintf(buffer,"Encoder:%d,Omega:%d,Torque:%d,Temperature:%d\n",Tx_Encoder,Tx_Omega ,Tx_Torque,Tx_Temperature);
+	//HAL_UART_Transmit_DMA(&huart2,TX_Data,sizeof(buffer)/sizeof(buffer[0]));如果一上面的形式发送，用字符数组 且uint8_t->char
 	 
 }
 
@@ -140,7 +147,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)//0.1s
 		  Delay_ms(5000); //dan
 		  M3508_Resume_From_Stop(&hcan1,&M3508_Motor_1,0);  
 	   }
-	 if(temp>=2)//紧急停止模拟 5个周期后紧急停止  
+	 if(temp>=5)//紧急停止模拟 5个周期后紧急停止  
 		{
 			M3508_Emergency_Stop(&hcan1,&M3508_Motor_1,1);
 			temp=0;
@@ -158,6 +165,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	PID pid;
 
   /* USER CODE END 1 */
 
@@ -188,20 +196,17 @@ int main(void)
   CAN_Init(&hcan1, CAN_FILTER(13) | CAN_FIFO_1 | CAN_STDID | CAN_DATA_TYPE,0x201,0x3ff,Motor_Call_Back);
   M3508_Init(&M3508_Motor_1);
   BSP_Init( BSP_DC24_LU_ON| BSP_DC24_LD_ON |BSP_DC24_RU_ON|BSP_DC24_RD_ON);
+  PID_Init (&pid,0,0,0,16384,-16384);
   //HAL_TIM_Base_Start(&htim4);
   HAL_TIM_Base_Start_IT(&htim4);
-//   HAL_NVIC_SetPriority(SysTick_IRQn,0,0);//4
-//   HAL_NVIC_SetPriority(CAN1_RX0_IRQn,1,0);//4
-//   HAL_NVIC_SetPriority(CAN1_RX1_IRQn,2,0);//4
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	 //Task_Loop(); 
+	//Task_Loop();  
 	//M3508_Set_Current(&hcan1,&M3508_Motor_1,3000,0);
-	//Delay_ms(100);
 	
     /* USER CODE END WHILE */
 

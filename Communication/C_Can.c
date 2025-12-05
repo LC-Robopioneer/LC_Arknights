@@ -162,4 +162,18 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan)
     }
 }
 
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+{
+    if (hcan->Instance == CAN1)
+    {
+        HAL_CAN_GetRxMessage(hcan, CAN_FILTER_FIFO0, &can_rx_buffer.Header, can_rx_buffer.Data);
+       CAN1_Object_Manage.Callback_Function(&can_rx_buffer);
+    }
+    else if (hcan->Instance == CAN2)
+    {
+        HAL_CAN_GetRxMessage(hcan, CAN_FILTER_FIFO0, &can_rx_buffer.Header, can_rx_buffer.Data);
+        CAN2_Object_Manage.Callback_Function(&can_rx_buffer);
+    }
+}
+
 
