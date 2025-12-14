@@ -1,0 +1,32 @@
+
+GraphedExpression="target_angle", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#a00909
+GraphedExpression="(Motor_CAN1_ID1).angle", Color=#09a01b
+GraphedExpression="(Motor_CAN1_ID1).speed", Color=#09a087
+GraphedExpression="target_speed", Color=#0984a0
+OpenDocument="dvc_M3508.cpp", FilePath="f:/M3508_test/M3508_test/User_dvc/dvc_M3508.cpp", Line=16
+OpenDocument="alg_pid.cpp", FilePath="f:/M3508_test/M3508_test/User_alg/alg_pid.cpp", Line=0
+OpenDocument="stm32f4xx_it.c", FilePath="f:/M3508_test/M3508_test/Core/Src/stm32f4xx_it.c", Line=78
+OpenDocument="startup_stm32f427xx.s", FilePath="f:/M3508_test/M3508_test/MDK-ARM/startup_stm32f427xx.s", Line=165
+OpenDocument="tsk_config_and_callback.cpp", FilePath="f:/M3508_test/M3508_test/User_tsk/tsk_config_and_callback.cpp", Line=30
+OpenDocument="main.c", FilePath="f:/M3508_test/M3508_test/Core/Src/main.c", Line=92
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=591, h=805, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=591, h=287, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=LEFT, x=0, y=1, w=755, h=653, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=755, h=439, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=1, y=0, w=2194, h=328, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=365, h=328, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" target_angle";" (Motor_CAN1_ID1).angle";" (Motor_CAN1_ID1).speed";" target_speed"], ColWidths=[100;100;100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[195;154;100;100;100;114;110;126;1195]
+TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;144;347]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh";"Access"], ColWidths=[282;232;100;260;100]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[26;26;26;26]
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Class";"Source"], ColWidths=[994;104;100;100;150;270]
+WatchedExpression="Motor_CAN1_ID1", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="target_angle", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="speedoutput", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="target_speed", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="mode", Window=Watched Data 1
+WatchedExpression="10000", Window=Watched Data 1

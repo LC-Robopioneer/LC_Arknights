@@ -4,6 +4,7 @@
 #include "drv_bsp.h"
 #include "dvc_M3508.h"
 #include "usart.h"
+#include "tim.h"
 #include <stdio.h>
 #include <string.h>
 

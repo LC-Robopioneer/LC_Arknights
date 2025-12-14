@@ -1,6 +1,6 @@
 #include "tsk_config_and_callback.h"
 
-Class_Motor_M3508 Motor_CAN1_ID1(1, &hcan1);
+Class_Motor_M3508 Motor_CAN1_ID1;
 
 // CAN1回调函数
 void CAN1_Callback(Struct_CAN_Rx_Buffer *rx_buffer)
@@ -46,29 +46,42 @@ void CAN2_Callback(Struct_CAN_Rx_Buffer *rx_buffer)
 {
 }
 
+// int cnt = 0;
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    // cnt++;
+    if (htim->Instance == TIM1)
+    {
+        CAN_Send_Data(&hcan1, 0x200, CAN1_0x200_Tx_Data, 8);
+    }
+}
+
 void Task_Init()
 {
     BSP_Init(BSP_DC24_LU_ON | BSP_DC24_LD_ON | BSP_DC24_RU_ON | BSP_DC24_RD_ON);
 
     CAN_Init(&hcan1, CAN1_Callback);
+
+    Motor_CAN1_ID1.Init(1, &hcan1);
+
+    Motor_CAN1_ID1.Speed_PID.Init(2550.0f, 0.0f, 1.5f,0.0f, 0.01f, 16384.0f, 16384.0f, 0.0f);
+    Motor_CAN1_ID1.Angle_PID.Init(0.45f, 0.0f, 0.0f,0.0f, 0.01f, 5000.0f, 450.0f, 0.0f);
+
+    HAL_TIM_Base_Start_IT(&htim1);
 }
+
+float target_angle = 150.0f;
+float target_omega = 20.0f;
+uint8_t mode = 0; // 0:角度模式 1:速度模式
 
 void Task_Loop()
 {
-    static uint32_t last_time_10ms = 0;
-    static uint32_t last_time_100ms = 0;
-    Motor_CAN1_ID1.Set_Current(3000);
-    if (HAL_GetTick() - last_time_10ms >= 10)
+    if (mode == 0)
     {
-        last_time_10ms = HAL_GetTick();
-        CAN_Send_Data(&hcan1, 0x200, CAN1_0x200_Tx_Data, 8);
+        Motor_CAN1_ID1.Set_Angle(target_angle);
     }
-    if(HAL_GetTick() - last_time_100ms >= 100 && uart_tx_complete)
+    else if (mode == 1)
     {
-        last_time_100ms = HAL_GetTick();
-        char buffer[128];
-        sprintf(buffer,"%d,%d,%d,%d\n",Motor_CAN1_ID1.Get_Angle(),Motor_CAN1_ID1.Get_Speed(),Motor_CAN1_ID1.Get_Actual_Current(),Motor_CAN1_ID1.Get_Temperature());
-        HAL_UART_Transmit_DMA(&huart1, (uint8_t*)buffer, strlen(buffer));
-        uart_tx_complete = 0;
+        Motor_CAN1_ID1.Set_Omega(target_omega);
     }
 }
