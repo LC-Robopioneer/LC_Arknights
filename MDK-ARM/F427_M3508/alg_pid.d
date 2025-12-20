@@ -33,4 +33,4 @@ f427_m3508\alg_pid.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 f427_m3508\alg_pid.o: ../Core/Inc/can.h
 f427_m3508\alg_pid.o: ../Core/Inc/main.h
 f427_m3508\alg_pid.o: ../Core/Inc/gpio.h
-f427_m3508\alg_pid.o: ..\User_tsk\tsk_delay.h
+f427_m3508\alg_pid.o: ../User_tsk/tsk_delay.h

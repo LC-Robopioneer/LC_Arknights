@@ -19,6 +19,12 @@ extern int16_t  Tx_Omega;
 extern int16_t  Tx_Torque;
 extern int16_t  Tx_Temperature;
 
+extern uint8_t serial_speed_flag;
+extern uint8_t serial_angle_flag; 
+
+extern float target_speed ;
+extern float target_angle ;
+
 HAL_StatusTypeDef PID_ParseSerialPack(PID *pid_speed, PID * pid_angle,uint8_t *serial_pack);
 
 #endif

@@ -34,12 +34,12 @@ f427_m3508\tsk_callback.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uar
 f427_m3508\tsk_callback.o: ../Core/Inc/can.h
 f427_m3508\tsk_callback.o: ../Core/Inc/usart.h
 f427_m3508\tsk_callback.o: ../Core/Inc/dma.h
-f427_m3508\tsk_callback.o: ..\User_drv\drv_can.h
+f427_m3508\tsk_callback.o: ../User_drv/drv_can.h
 f427_m3508\tsk_callback.o: ../Core/Inc/gpio.h
-f427_m3508\tsk_callback.o: ..\User_drv\drv_serial.h
+f427_m3508\tsk_callback.o: ../User_drv/drv_serial.h
 f427_m3508\tsk_callback.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 f427_m3508\tsk_callback.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 f427_m3508\tsk_callback.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
-f427_m3508\tsk_callback.o: ..\User_dvc\dvc_m3508.h
-f427_m3508\tsk_callback.o: ..\User_alg\alg_pid.h
-f427_m3508\tsk_callback.o: ..\User_tsk\tsk_delay.h
+f427_m3508\tsk_callback.o: ../User_dvc/dvc_m3508.h
+f427_m3508\tsk_callback.o: ../User_alg/alg_pid.h
+f427_m3508\tsk_callback.o: ../User_tsk/tsk_delay.h

@@ -34,7 +34,7 @@ f427_m3508\alg_serial.o: ../Core/Inc/can.h
 f427_m3508\alg_serial.o: ../Core/Inc/main.h
 f427_m3508\alg_serial.o: ../Core/Inc/gpio.h
 f427_m3508\alg_serial.o: ..\User_alg\alg_pid.h
-f427_m3508\alg_serial.o: ..\User_tsk\tsk_delay.h
+f427_m3508\alg_serial.o: ../User_tsk/tsk_delay.h
 f427_m3508\alg_serial.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-f427_m3508\alg_serial.o: ..\User_dvc\dvc_m3508.h
-f427_m3508\alg_serial.o: ..\User_drv\drv_can.h
+f427_m3508\alg_serial.o: ../User_dvc/dvc_m3508.h
+f427_m3508\alg_serial.o: ../User_drv/drv_can.h

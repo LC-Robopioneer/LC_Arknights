@@ -43,9 +43,8 @@ float PID_Caculate_Speed(PID * pid,float current_speed,float target_speed)
 float PID_Caculate_Angle(PID * pid,float current_angle,float target_angle)
 {
 	float output_current;//输出为电流
-	output_current=PID_Caculate (pid,current_angle,target_angle);//选择PID_Caculate or PID_Caculate_Speed
-	return output_current;
-	
+	output_current=PID_Caculate (pid,current_angle,target_angle);
+	return output_current;	
 }
 
 

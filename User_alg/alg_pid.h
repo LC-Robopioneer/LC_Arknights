@@ -24,9 +24,10 @@ extern PID pid_speed;
 extern PID pid_angle;
 
 void PID_Init(PID * pid,float KP,float KI,float KD,float out_max,float out_min);
-//float PID_Caculate(PID * pid,float current,float target);
 float PID_Caculate_Speed(PID * pid,float current_speed,float target_speed);
 float PID_Caculate_Angle(PID * pid,float current_angle,float target_angle);
+
+float PID_Caculate(PID * pid,float current,float target);
 
 #endif
 

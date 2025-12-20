@@ -106,3 +106,4 @@ void M3508_Update_State(CAN_HandleTypeDef *hcan,M3508_Motor *Motor,uint8_t motor
 //	//Motor->target_current=PID_Caculate(pid,now_current ,target_current );//PID 传入当前转速和目标转速 传出电流
 //	Security_Check(CAN_Send_Data(hcan,motor_position,Motor->target_current));	
 //}
+

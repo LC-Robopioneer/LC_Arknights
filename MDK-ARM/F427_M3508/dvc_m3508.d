@@ -33,6 +33,6 @@ f427_m3508\dvc_m3508.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex
 f427_m3508\dvc_m3508.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 f427_m3508\dvc_m3508.o: ../Core/Inc/can.h
 f427_m3508\dvc_m3508.o: ../Core/Inc/gpio.h
-f427_m3508\dvc_m3508.o: ..\User_alg\alg_pid.h
-f427_m3508\dvc_m3508.o: ..\User_tsk\tsk_delay.h
-f427_m3508\dvc_m3508.o: ..\User_drv\drv_can.h
+f427_m3508\dvc_m3508.o: ../User_alg/alg_pid.h
+f427_m3508\dvc_m3508.o: ../User_tsk/tsk_delay.h
+f427_m3508\dvc_m3508.o: ../User_drv/drv_can.h
