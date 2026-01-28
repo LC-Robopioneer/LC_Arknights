@@ -1,0 +1,9 @@
+# 一般可执行文件
+/**/*.exe
+
+# Keil-DefaultCompiler工程忽略项
+/**/MDK-ARM/*
+# 不忽略Keil工程配置文件
+!/**/MDK-ARM/*.uvoptx
+!/**/MDK-ARM/*.uvprojx
+!/**/MDK-ARM/startup_*.s
