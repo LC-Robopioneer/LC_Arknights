@@ -1,0 +1,1 @@
+f427_m3508_base_ustc\startup_stm32f427xx.o: startup_stm32f427xx.s
