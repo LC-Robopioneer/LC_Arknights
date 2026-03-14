@@ -1,0 +1,7 @@
+CompileFlags:
+  Add:
+    - -I"null\include"
+  Remove: []
+  CompilationDatabase: ./build/H723VGT6_Demo
+Diagnostics:
+  Suppress: "*"
